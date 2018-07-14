@@ -10,12 +10,38 @@
     crossorigin="anonymous"></script>
   <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4"
     crossorigin="anonymous">
-  <script src="jq-plugin-validator.js"></script>
+  <script src="jq-validator.umd.js"></script>
 </head>
 
 <body>
-  <div id="root" class='col-md-6'>
-    <!-- <i class="icon-spin6 animate-spin"></i> -->
+  <form>
+    <div class='form-row'>
+        <div class='col-md-10 mx-3 mb-3'>
+          <label>Required</label>
+          <input class="form-control" type="text" val-required>
+        </div>
+    </div>
+    <div class='form-row'>
+        <div class='col-md-10 mx-3 mb-3'>
+          <label>Numbers</label>
+          <input class="form-control" type="text" val-number>
+        </div>
+    </div>
+    <div class='form-row'>
+        <div class='col-md-10 mx-3 mb-3'>
+          <label>Time 12</label>
+          <input class="form-control" type="text" val-option='12' val-time>
+        </div>
+    </div>
+    <div class='form-row'>
+        <div class='col-md-10 mx-3 mb-3'>
+          <label>Time 24</label>
+          <input class="form-control" type="text" val-option='24' val-time>
+        </div>
+    </div>
+  </form>
+  <div class='col-md-10 mx-3 mb-3'>
+    <button class='btn btn-default' id='run'>Run</button>
   </div>
   <script src="./test.js"></script>
 </body>

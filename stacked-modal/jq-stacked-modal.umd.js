@@ -1,30 +1,29 @@
-(function (factory){
+(function (factory) {
 	if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define(['jquery'], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // Node/CommonJS
-        module.exports = function( root, jQuery ) {
-            if ( jQuery === undefined ) {
-                // require('jQuery') returns a factory that requires window to
-                // build a jQuery instance, we normalize how we use modules
-                // that require this pattern but the window provided is a noop
-                // if it's defined (how jquery works)
-                if ( typeof window !== 'undefined' ) {
-                    jQuery = require('jquery');
-                }
-                else {
-                    jQuery = require('jquery')(root);
-                }
-            }
-            factory(jQuery, window, document);
-            return jQuery;
-        };
-    } else {
-        // Browser globals
-        factory(jQuery, window, document);
-    }
-}(function($, window, document, undefined) {
+		// AMD. Register as an anonymous module.
+		define(['jquery'], factory);
+	} else if (typeof module === 'object' && module.exports) {
+		// Node/CommonJS
+		module.exports = function (root, jQuery) {
+			if (jQuery === undefined) {
+				// require('jQuery') returns a factory that requires window to
+				// build a jQuery instance, we normalize how we use modules
+				// that require this pattern but the window provided is a noop
+				// if it's defined (how jquery works)
+				if (typeof window !== 'undefined') {
+					jQuery = require('jquery');
+				} else {
+					jQuery = require('jquery')(root);
+				}
+			}
+			factory(jQuery, window, document);
+			return jQuery;
+		};
+	} else {
+		// Browser globals
+		factory(jQuery, window, document);
+	}
+}(function ($, window, document, undefined) {
 
 	const CL_MODAL = 'modal';
 	const CL_DIALOG = CL_MODAL + '-dialog';
@@ -43,11 +42,11 @@
 	var _options = {};
 	var _isInitialized = false;
 
-	const _isFn = function(fn) {
+	const _isFn = function (fn) {
 		return fn && typeof fn === 'function';
 	};
 
-	const _createBase = function() {
+	const _createBase = function () {
 		var $dialog = $('<div/>').addClass(CL_DIALOG);
 		var $content = $('<div/>').addClass(CL_CONTENT);
 		var $header = $('<div/>').addClass(CL_HEADER);
@@ -67,7 +66,7 @@
 			.append($dialog);
 	};
 
-	const _create = function(options) {
+	const _create = function (options) {
 		if (options.id === undefined || options.id === null) {
 			throw Error('id is not defined.');
 		}
@@ -78,31 +77,31 @@
 		$('body').append($modal);
 	};
 
-	const _setModalId = function($modal, id) {
+	const _setModalId = function ($modal, id) {
 		$modal.attr(ATTR_STK_ID, id);
-	}
+	};
 
-	const _setModalContents = function($modal, header, body, footer) {
+	const _setModalContents = function ($modal, header, body, footer) {
 		$modal.find('.' + CL_HEADER).prepend(header);
 		$modal.find('.' + CL_BODY).append(body);
 		$modal.find('.' + CL_FOOTER).append(footer);
-	}
+	};
 
-	const _setModalBaseEvents = function($modal) {
-		$modal.on('stk:show', function() {
+	const _setModalBaseEvents = function ($modal) {
+		$modal.on('stk:show', function () {
 			var stackedCount = $('.stkmodal:visible').length;
 			$(this).css('z-index', _options.baseZIndex + (10 * stackedCount));
 		});
-		$modal.on('stk:hidden', function() {
+		$modal.on('stk:hidden', function () {
 			$(this).css('z-index', _options.baseZIndex);
 		});
-		$modal.find('[data-dismiss=stkmodal]').on('click', function() {
+		$modal.find('[data-dismiss=stkmodal]').on('click', function () {
 			var id = $modal.attr(ATTR_STK_ID);
 			_hide(id);
 		});
 	};
 
-	const _show = function(id) {
+	const _show = function (id) {
 		var $modal = $('[stkmodal-id=' + id + ']');
 		if ($modal.length) {
 			$modal.trigger('stk:show');
@@ -111,7 +110,7 @@
 		}
 	};
 
-	const _hide = function(id) {
+	const _hide = function (id) {
 		var $modal = $('[stkmodal-id=' + id + ']');
 		if ($modal.length) {
 			$modal.trigger('stk:hide');
@@ -120,23 +119,23 @@
 		}
 	};
 
-	const _destroy = function(id) {
+	const _destroy = function (id) {
 		var $modal = $('[stkmodal-id=' + id + ']');
 		if ($modal.length) {
 			$modal.remove();
 		}
 	};
 
-	const _initialize = function(options) {
+	const _initialize = function (options) {
 		if (options) {
 			$.extend(_options, $.stkModal.defaults, options);
 		} else {
 			$.extend(_options, $.stkModal.defaults);
 		}
 		_isInitialized = true;
-	}
+	};
 
-	$.stkModal = function(options) {
+	$.stkModal = function (options) {
 		console.log('Ahh...');
 	};
 
@@ -146,14 +145,14 @@
 		css: './css/stkmodal.css'
 	};
 
-	$.stkModal.initialize = function(options) {
+	$.stkModal.initialize = function (options) {
 		if (!_isInitialized) {
 			_initialize(options);
 		}
 		return this;
 	};
 
-	$.stkModal.create = function(options) {
+	$.stkModal.create = function (options) {
 		if (!_isInitialized) {
 			_initialize();
 		}
@@ -161,23 +160,23 @@
 		return this;
 	};
 
-	$.stkModal.show = function(id) {
+	$.stkModal.show = function (id) {
 		_show(id);
 		return this;
 	};
 
-	$.stkModal.hide = function(id) {
+	$.stkModal.hide = function (id) {
 		_hide(id);
 		return this;
 	};
 
-	$.stkModal.destroy = function(id) {
+	$.stkModal.destroy = function (id) {
 		_destroy(id);
 		return this;
 	};
 
-	$.stkModal.auto = function(id) {
-		$('[stkmodal-target]').on('click', function() {
+	$.stkModal.auto = function (id) {
+		$('[stkmodal-target]').on('click', function () {
 			_show($(this).attr('stkmodal-target'));
 		});
 	};

@@ -1,3 +1,3 @@
-$('#run').on('click',function(){
+$('#run').on('click', function () {
 	$.validator.run();
 });
